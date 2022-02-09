@@ -44,6 +44,7 @@ def generate_words(fixed_chars='.....', containing_chars='', exclude_chars='', l
     # character filtering in-place, but that would take more time
     possible_words = []
     for word in temp_possible_words:
+        # TODO - Optimize this check
         if all(char in word for char in containing_chars) and word.lower() in ALLOWED_WORDS:
             possible_words.append(word)
     
