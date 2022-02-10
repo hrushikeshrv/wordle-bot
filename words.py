@@ -61,19 +61,21 @@ def permute_chars_on(words, chars):
     return possible_words
 
 
-def get_matching_words(fixed_characters='.....', containing_characters=None, exclude_characters=None, length=5):
+def get_matching_words(fixed_characters='.....', containing_character_sets=None, containing_characters=None, exclude_characters=None, length=5):
     """
     Iterate through all possible guessable words and return only the words which match the input
     parameters.
     
     fixed_characters is a string of length 5
-    containing_characters is a list of sets
+    containing_character_sets is a list of sets
     exclude_characters is a string containing all the characters not in the word (could be made a set, but whatever)
     """
     if exclude_characters is None:
         exclude_characters = set()
     if containing_characters is None:
-        containing_characters = [ALL_CHARS for i in range(length)]
+        containing_characters = ALL_CHARS
+    if containing_character_sets is None:
+        containing_character_sets = [ALL_CHARS for i in range(length)]
     matches = []
     for word in ALLOWED_WORDS:
         word = word.upper()
@@ -82,12 +84,14 @@ def get_matching_words(fixed_characters='.....', containing_characters=None, exc
             if fixed_characters[i] != '.' and word[i] != fixed_characters[i]:
                 valid = False
                 break
-            if word[i] not in containing_characters[i]:
+            if word[i] not in containing_character_sets[i]:
                 valid = False
                 break
             if word[i] in exclude_characters:
                 valid = False
                 break
+        if containing_characters and len(containing_characters - set(word)) > 0:
+            valid = False
         if valid:
             matches.append(word)
     return matches

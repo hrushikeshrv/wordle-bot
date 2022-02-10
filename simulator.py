@@ -5,7 +5,8 @@ from words import ALL_CHARS
 class Simulator:
     def __init__(self, length=5):
         self.fixed_characters = '.....'
-        self.containing_characters = [ALL_CHARS.copy() for i in range(length)]
+        self.containing_character_sets = [ALL_CHARS.copy() for i in range(length)]
+        self.containing_characters = set()
         self.exclude_characters = set()
         self.length = length
     
@@ -42,10 +43,11 @@ class Simulator:
                         _ += '.'
                 self.fixed_characters = _
                 # Update the containing characters
-                self.containing_characters[i] = set(guessed_char)
+                self.containing_character_sets[i] = set(guessed_char)
             if resp_code == "Y":
-                # Update the containing_character
-                self.containing_characters[i].remove(guessed_char)
+                # Update the containing_character_sets
+                self.containing_character_sets[i].remove(guessed_char)
+                self.containing_characters.add(guessed_char)
     
     def run(self):
         print('Enter "W" if you win!')
@@ -60,8 +62,10 @@ class Simulator:
             print('\nGenerating your next guesses...')
             words = get_matching_words(
                 self.fixed_characters,
+                self.containing_character_sets,
                 self.containing_characters,
                 self.exclude_characters
             )
             print(f'\nFound {len(words)} possible matches.')
             print(f'Guess one of the following words next - \n{words[:10]}')
+        print('Looks like you didn\'t get it this time. Try a better opening word next time...')
