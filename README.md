@@ -15,16 +15,13 @@ Clone this repository and then -
 7. Repeat till you win
 
 # Input format
-If you guess a word, say "YEAST", and the game tells you that the letters "S" and "T" in the correct spot, and none of the other letters are in the answer, then you should 
-input the following string into the terminal - `...ST _ YEA`
+For each guess, enter the word you guessed and the response you got from the game in the following 
+format - <word> <response>
 
-The input consists of three parts separated by a space. 
-1. The first part contains the characters that are in the correct spot in the answer - in this case "S" and "T". Since we don't know
-the first 3 characters, we write them as "." If we didn't know any characters in the correct spot, we would just write `.....`
-2. The second part contains characters that are in the answer but were not in the correct position in your guess. In this case
-we didn't have any characters like that, so we write a `_` instead.
-3. The second part contains characters that we know are not in the answer - in this case "Y", "E", and "A". If we didn't get any
-characters like this, we would have written a `_` instead.
+The <word> is just the word you guessed, the response is a string where each character is one of 
+`"g"`, `"y"`, or `"b"`. `"g"` means that the character at that position was green, `"y"` means that the 
+character at that position was yellow, and `"b"` means that the character at that position was black.
 
-You don't have to write all the characters for the second and third part for each guess, you can just add the new characters that you
-discovered and the bot will remember all the characters you had entered before.
+A sample input could be as follows - `"straw gbygb"`.  
+This means that `s` is in the answer, and it is in the correct position, `t` is not in the answer,
+`r` is in the answer, but it is not in the 3rd position, and so on.
