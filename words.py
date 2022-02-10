@@ -76,12 +76,18 @@ def get_matching_words(fixed_characters='.....', containing_characters=None, exc
         containing_characters = [ALL_CHARS for i in range(length)]
     matches = []
     for word in ALLOWED_WORDS:
+        word = word.upper()
+        valid = True
         for i in range(len(word)):
             if fixed_characters[i] != '.' and word[i] != fixed_characters[i]:
-                continue
+                valid = False
+                break
             if word[i] not in containing_characters[i]:
-                continue
+                valid = False
+                break
             if word[i] in exclude_characters:
-                continue
-        matches.append(word)
+                valid = False
+                break
+        if valid:
+            matches.append(word)
     return matches

@@ -1,10 +1,11 @@
-from words import generate_words
+from words import get_matching_words
+from words import ALL_CHARS
 
 
 class Simulator:
     def __init__(self, length=5):
         self.fixed_characters = '.....'
-        self.containing_characters = [set() for i in range(length)]
+        self.containing_characters = [ALL_CHARS.copy() for i in range(length)]
         self.exclude_characters = set()
         self.length = length
     
@@ -40,28 +41,27 @@ class Simulator:
                     else:
                         _ += '.'
                 self.fixed_characters = _
+                # Update the containing characters
+                self.containing_characters[i] = set(guessed_char)
             if resp_code == "Y":
                 # Update the containing_character
-                for j in range(len(guess)):
-                    if j == i:
-                        self.containing_characters[j].remove(guessed_char)
-                    else:
-                        self.containing_characters[j].add(guessed_char)
+                self.containing_characters[i].remove(guessed_char)
     
     def run(self):
+        print('Enter "W" if you win!')
         for i in range(6):      # We have a total of 6 guesses
-            response = input('\n---------\nEnter the response to your last guess - ').strip()
-            if response == 'W':
+            response = input('\n---------\nEnter your last guess and its response - ').strip()
+            if response.upper() == 'W':
                 print('Great!')
                 return
-            # The response will have format "fixed_chars<SPACE>containing_chars<SPACE>exclude_chars"
             _ = response.split()
-            response_dict = {
-                'fixed_characters': _[0],
-                'containing_characters': _[1],
-                'exclude_characters': _[2],
-            }
-            self.parse_response(response_dict)
+            self.parse_response(_[0], _[1])
+            
             print('\nGenerating your next guesses...')
-            words = self.get_possible_guesses()
+            words = get_matching_words(
+                self.fixed_characters,
+                self.containing_characters,
+                self.exclude_characters
+            )
+            print(f'\nFound {len(words)} possible matches.')
             print(f'Guess one of the following words next - \n{words[:10]}')
