@@ -1,10 +1,11 @@
 # Consider all the words that are actually allowed answers while playing the game,
 # consider all the words that could be used for analysis
-from dictionary import ALLOWED_WORDS
+from dictionary import ALLOWED_WORDS, ALLOWED_GUESSES
 
 ALL_CHARS = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
 
+# Deprecated. Instead of generating words, just parse the set of all words and return matches
 def generate_words(fixed_chars='.....', containing_chars='', exclude_chars='', length=5):
     """
     Generate all possible words of the given length with all the characters in fixed_chars in their given
@@ -58,3 +59,29 @@ def permute_chars_on(words, chars):
         for char in chars:
             possible_words.append(word + char)
     return possible_words
+
+
+def get_matching_words(fixed_characters='.....', containing_characters=None, exclude_characters=None, length=5):
+    """
+    Iterate through all possible guessable words and return only the words which match the input
+    parameters.
+    
+    fixed_characters is a string of length 5
+    containing_characters is a list of sets
+    exclude_characters is a string containing all the characters not in the word (could be made a set, but whatever)
+    """
+    if exclude_characters is None:
+        exclude_characters = set()
+    if containing_characters is None:
+        containing_characters = [ALL_CHARS for i in range(length)]
+    matches = []
+    for word in ALLOWED_WORDS:
+        for i in range(len(word)):
+            if fixed_characters[i] != '.' and word[i] != fixed_characters[i]:
+                continue
+            if word[i] not in containing_characters[i]:
+                continue
+            if word[i] in exclude_characters:
+                continue
+        matches.append(word)
+    return matches
