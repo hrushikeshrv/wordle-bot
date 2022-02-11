@@ -1,3 +1,4 @@
+from dictionary import ALLOWED_WORDS
 from words import get_matching_words
 from words import ALL_CHARS
 
@@ -9,6 +10,7 @@ class Simulator:
         self.containing_characters = set()
         self.exclude_characters = set()
         self.length = length
+        self.word_list = list(ALLOWED_WORDS)
     
     def parse_response(self, guess, response):
         """
@@ -45,8 +47,9 @@ class Simulator:
                 # Update the containing characters
                 self.containing_character_sets[i] = set(guessed_char)
             if resp_code == "Y":
-                # Update the containing_character_sets
+                # The guessed_char is not at this index at least
                 self.containing_character_sets[i].remove(guessed_char)
+                # But it is in the answer somewhere
                 self.containing_characters.add(guessed_char)
     
     def run(self):
@@ -61,11 +64,13 @@ class Simulator:
             
             print('\nGenerating your next guesses...')
             words = get_matching_words(
+                self.word_list,
                 self.fixed_characters,
                 self.containing_character_sets,
                 self.containing_characters,
                 self.exclude_characters
             )
+            self.word_list = words
             print(f'\nFound {len(words)} possible matches.')
             print(f'Guess one of the following words next - \n{words[:10]}')
         print('Looks like you didn\'t get it this time. Try a better opening word next time...')

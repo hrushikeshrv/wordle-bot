@@ -45,7 +45,6 @@ def generate_words(fixed_chars='.....', containing_chars='', exclude_chars='', l
     # character filtering in-place, but that would take more time
     possible_words = []
     for word in temp_possible_words:
-        # TODO - Optimize this check
         if all(char in word for char in containing_chars) and word.lower() in ALLOWED_WORDS:
             possible_words.append(word)
     
@@ -61,14 +60,21 @@ def permute_chars_on(words, chars):
     return possible_words
 
 
-def get_matching_words(fixed_characters='.....', containing_character_sets=None, containing_characters=None, exclude_characters=None, length=5):
+def get_matching_words(
+        word_list,
+        fixed_characters='.....',
+        containing_character_sets=None,
+        containing_characters=None,
+        exclude_characters=None,
+        length=5
+):
     """
     Iterate through all possible guessable words and return only the words which match the input
     parameters.
     
     fixed_characters is a string of length 5
     containing_character_sets is a list of sets
-    exclude_characters is a string containing all the characters not in the word (could be made a set, but whatever)
+    exclude_characters is a string containing all the characters not in the word
     """
     if exclude_characters is None:
         exclude_characters = set()
@@ -77,7 +83,7 @@ def get_matching_words(fixed_characters='.....', containing_character_sets=None,
     if containing_character_sets is None:
         containing_character_sets = [ALL_CHARS for i in range(length)]
     matches = []
-    for word in ALLOWED_WORDS:
+    for word in word_list:
         word = word.upper()
         valid = True
         for i in range(len(word)):
@@ -95,3 +101,23 @@ def get_matching_words(fixed_characters='.....', containing_character_sets=None,
         if valid:
             matches.append(word)
     return matches
+
+
+def rank(word_list, allowed_guesses):
+    """
+    Ranks words in the word_list according to the expected amount of
+    information the word would give as a guess.
+    """
+    if len(word_list) == 1:
+        return word_list
+    
+    values = []
+    for word in word_list:
+        values.append(calculate_value(word, allowed_guesses))
+    
+    word_ranks = zip(word_list, values)
+    return sorted(word_ranks, key=lambda x: x[1], reverse=True)
+
+
+def calculate_value(word, allowed_guesses):
+    return
