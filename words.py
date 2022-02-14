@@ -1,3 +1,4 @@
+from math import log2
 # Consider all the words that are actually allowed answers while playing the game,
 # consider all the words that could be used for analysis
 from dictionary import ALLOWED_WORDS, ALLOWED_GUESSES
@@ -120,4 +121,17 @@ def rank(word_list, allowed_guesses):
 
 
 def calculate_value(word, allowed_guesses):
-    return
+    response_frequencies = {}
+    for guess in allowed_guesses:
+        _ = guess_response(guess=word, answer=guess)
+        response_frequencies[_] = response_frequencies.get(_, 0) + 1
+    total_words = len(allowed_guesses)
+    value = 0
+    for pattern in response_frequencies:
+        # This gives the amount of information contained in the word in bits
+        value += (response_frequencies[pattern] / total_words) * -log2(response_frequencies[pattern] / total_words)
+    return value
+
+
+def guess_response(guess, answer):
+    return ''
