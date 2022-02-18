@@ -1179,3 +1179,5 @@ ALLOWED_GUESSES = {"aahed", "aalii", "aargh", "aarti", "abaca", "abaci", "abacs"
                    "zonae", "zonda", "zoned", "zoner", "zones", "zonks", "zooea", "zooey", "zooid", "zooks", "zooms",
                    "zoons", "zooty", "zoppa", "zoppo", "zoril", "zoris", "zorro", "zouks", "zowee", "zowie", "zulus",
                    "zupan", "zupas", "zuppa", "zurfs", "zuzim", "zygal", "zygon", "zymes", "zymic"}
+
+ALL_WORDS = ALLOWED_WORDS.union(ALLOWED_GUESSES)

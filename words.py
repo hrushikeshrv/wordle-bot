@@ -46,7 +46,7 @@ def get_matching_words(
             valid = False
         if valid:
             matches.append(word)
-    return matches
+    return rank(matches, word_list)
 
 
 def rank(word_list, allowed_guesses):
@@ -55,7 +55,7 @@ def rank(word_list, allowed_guesses):
     information the word would give as a guess.
     """
     if len(word_list) == 1:
-        return word_list
+        return [(word_list[0], 1)]
     
     values = []
     for word in word_list:
@@ -68,6 +68,7 @@ def rank(word_list, allowed_guesses):
 def calculate_value(word, allowed_guesses):
     response_frequencies = {}
     for guess in allowed_guesses:
+        guess = guess.upper()
         _ = guess_response(guess=word, answer=guess)
         response_frequencies[_] = response_frequencies.get(_, 0) + 1
     total_words = len(allowed_guesses)
@@ -79,4 +80,13 @@ def calculate_value(word, allowed_guesses):
 
 
 def guess_response(guess, answer):
-    return ''
+    response = ''
+    for i in range(len(guess)):
+        char = guess[i]
+        if char not in answer:
+            response += 'b'
+        elif char == answer[i]:
+            response += 'g'
+        else:
+            response += 'y'
+    return response

@@ -1,4 +1,4 @@
-from dictionary import ALLOWED_WORDS
+from dictionary import ALL_WORDS
 from words import get_matching_words
 from words import ALL_CHARS
 
@@ -10,7 +10,7 @@ class Simulator:
         self.containing_characters = set()
         self.exclude_characters = set()
         self.length = length
-        self.word_list = list(ALLOWED_WORDS)
+        self.word_list = list(ALL_WORDS)
     
     def parse_response(self, guess, response):
         """
@@ -70,7 +70,9 @@ class Simulator:
                 self.containing_characters,
                 self.exclude_characters
             )
-            self.word_list = words
+            self.word_list = [x[0] for x in words]
             print(f'\nFound {len(words)} possible matches.')
-            print(f'Guess one of the following words next - \n{words[:10]}')
+            print(f'These are the top 5 guesses you should try -')
+            for word in words[:5]:
+                print(f'{word[0]}, with an expected amount of {word[1]} bits of information')
         print('Looks like you didn\'t get it this time. Try a better opening word next time...')
