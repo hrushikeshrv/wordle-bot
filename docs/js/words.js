@@ -17,7 +17,7 @@ function getMatchingWords(
     exclude_characters is a string containing all the characters not in the word
      */
     if (!excludeCharacters) {
-        excludeCharacters = set();
+        excludeCharacters = new Set();
     }
     if (!containingCharacters) {
         containingCharacters = ALL_CHARS;
@@ -47,7 +47,7 @@ function getMatchingWords(
                 break;
             }
         }
-        if (containingCharacters && (containingCharacters - set(word)).length > 0) {
+        if (containingCharacters && (containingCharacters - new Set(word)).length > 0) {
             valid = false;
         }
         if (valid) {
@@ -58,5 +58,37 @@ function getMatchingWords(
 }
 
 function rank(wordList, allowedGuesses) {
+    if (wordList.length === 1) {
+        return [[wordList[0], 1]]
+    }
+    const values = [];
+    for (let word of wordList) {
+        values.push([word, calculateValue(word, allowedGuesses)]);
+    }
+    return values.sort((a, b) => {return a[1] - b[1]});
+}
 
+function calculateValue(word, allowedGuesses) {
+    const responseFrequencies = {};
+    for (let guess of allowedGuesses) {
+        guess = guess.toUpperCase();
+
+    }
+}
+
+function guessResponse(guess, answer) {
+    let response = '';
+    for (let i = 0; i < guess.length; i++) {
+        const char = guess[i];
+        if (!answer.match(`\w*${char}\w*`)) {
+            response += 'b';
+        }
+        else if (char === answer[i]) {
+            response += 'g';
+        }
+        else {
+            response += 'y';
+        }
+    }
+    return response;
 }
