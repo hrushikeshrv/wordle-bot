@@ -72,8 +72,15 @@ function calculateValue(word, allowedGuesses) {
     const responseFrequencies = {};
     for (let guess of allowedGuesses) {
         guess = guess.toUpperCase();
-
+        const _ = guessResponse(word, guess);
+        responseFrequencies[guess] = responseFrequencies[guess] ? responseFrequencies[guess] + 1 : 1;
     }
+    const totalWords = allowedGuesses.length;
+    let value = 0;
+    for (let pattern in responseFrequencies) {
+        value += (responseFrequencies[pattern] / totalWords) * -Math.log2(responseFrequencies[pattern] / totalWords);
+    }
+    return value;
 }
 
 function guessResponse(guess, answer) {
