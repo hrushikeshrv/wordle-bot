@@ -1,4 +1,4 @@
-const ALL_CHARS = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+const ALL_CHARS = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
 function getMatchingWords(
     wordList,
