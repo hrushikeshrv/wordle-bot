@@ -2,13 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/dictionary.js"></script>
     <script src="js/words.js"></script>
     <script src="js/simulator.js"></script>
     <title>Wordle Solver</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div class="flexbox-row full-height">
+    <div class="flexbox-column column-third wordle-col pad-30">
+        <h1>How to use this bot:</h1>
+    </div>
+    <div class="flexbox-column column-third wordle-col pad-30">
+        <div class="wordle-container flexbox-column ajc pad-10">
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-1">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-2">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-3">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-4">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-5">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+            <div class="wordle-row mbt-10 flexbox-row" id="guess-6">
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+                <div class="wordle-guess-letter" data-color="none"></div>
+            </div>
+        </div>
+        <div class="mt-30 keyboard-container">
 
-<script src="js/wordle-bot.js"></script>
+        </div>
+    </div>
+    <div class="flexbox-column column-third wordle-col pad-30">
+        <h1>Top next guesses:</h1>
+    </div>
+</div>
+
+<script src="js/wordle-bot-ui.js"></script>
 </body>
 </html>
